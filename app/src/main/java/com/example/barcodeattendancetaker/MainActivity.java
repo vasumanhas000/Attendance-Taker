@@ -3,6 +3,9 @@ package com.example.barcodeattendancetaker;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,7 +18,11 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AttendanceAdapter.OnAttendanceListener{
+
+    ArrayList<AttendanceModel> attendanceModels;
+    RecyclerView recyclerView;
+    AttendanceAdapter adapter;
 
     public void nextActivity(View view){
         Intent intent = new Intent(getApplicationContext(),AttendanceActivity.class);
@@ -31,7 +38,29 @@ public class MainActivity extends AppCompatActivity {
         } else {
             getRuntimePermissions();
         }
+        recyclerView = findViewById(R.id.my_recycler_view);
+        attendanceModels = new ArrayList<>();
+        ArrayList<String> temp = new ArrayList<>();
+        temp.add("1");
+        temp.add("2");
+        temp.add("3");
+        attendanceModels.add(new AttendanceModel(temp,"25th Aug,2000"));
+        adapter = new AttendanceAdapter(attendanceModels,this);
+        recyclerView.setAdapter(adapter);
+        DividerItemDecoration itemDecoration = new DividerItemDecoration(getApplicationContext(),DividerItemDecoration.VERTICAL);
+        itemDecoration.setDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.divider));
+        recyclerView.addItemDecoration(itemDecoration);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
+
+    @Override
+    public void onAttendanceClick(int position) {
+        Log.i("position",position+"");
+//        Intent intent = new Intent(getApplicationContext(),SecondActivity.class);
+//        intent.putExtra("position",position);
+//        startActivity(intent);
+    }
+
     private String[] getRequiredPermissions() {
         try {
             PackageInfo info =

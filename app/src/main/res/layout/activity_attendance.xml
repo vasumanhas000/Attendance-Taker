@@ -1,15 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:background="@null"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <SurfaceView
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:srcCompat="@drawable/tick_icon"
+        app:borderWidth="0dp"
+        android:onClick="nextActivity"
+        android:backgroundTint="@color/white"
+        android:layout_gravity="bottom|right"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:id="@+id/camera_view"
+        android:background="@null"
         android:layout_height="match_parent">
-    </SurfaceView>
+
+        <SurfaceView
+            android:layout_width="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/camera_view"
+            android:background="@null"
+            android:layout_height="match_parent">
+        </SurfaceView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
