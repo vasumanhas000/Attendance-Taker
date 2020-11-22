@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements AttendanceAdapter
     public void nextActivity(View view){
         Intent intent = new Intent(getApplicationContext(),AttendanceActivity.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
     }
 
     @Override
@@ -47,9 +48,9 @@ public class MainActivity extends AppCompatActivity implements AttendanceAdapter
         attendanceModels.add(new AttendanceModel(temp,"2020-08-25"));
         adapter = new AttendanceAdapter(attendanceModels,this);
         recyclerView.setAdapter(adapter);
-        DividerItemDecoration itemDecoration = new DividerItemDecoration(getApplicationContext(),DividerItemDecoration.VERTICAL);
-        itemDecoration.setDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.divider));
-        recyclerView.addItemDecoration(itemDecoration);
+//        DividerItemDecoration itemDecoration = new DividerItemDecoration(getApplicationContext(),DividerItemDecoration.VERTICAL);
+//        itemDecoration.setDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.divider));
+//        recyclerView.addItemDecoration(itemDecoration);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 

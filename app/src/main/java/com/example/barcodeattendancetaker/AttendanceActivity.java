@@ -41,6 +41,12 @@ public class AttendanceActivity extends AppCompatActivity {
     ArrayAdapter arrayAdapter;
     BottomSheetBehavior bottomSheetBehavior;
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
+    }
+
     public void onClickTick(View view){
         if(bottomSheetBehavior.getState()==bottomSheetBehavior.STATE_COLLAPSED){
             bottomSheetBehavior.setState(bottomSheetBehavior.STATE_EXPANDED);

@@ -1,31 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
-    android:layout_width="match_parent"
+<androidx.cardview.widget.CardView
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginTop="6dp"
-    android:layout_marginBottom="6dp"
-    app:strokeWidth="0dp"
-    android:clickable="true"
-    android:focusable="true"
-    android:checkable="true"
-    app:cardElevation="0dp"
+    android:layout_width="match_parent"
+    app:cardBackgroundColor="@color/white"
+    app:contentPaddingLeft="8dp"
+    app:contentPaddingRight="8dp"
     app:cardCornerRadius="10dp"
-    app:strokeColor="@color/primary"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:elevation="3dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
-        android:paddingVertical="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        >
+        android:paddingVertical="8dp">
+
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/date"
@@ -34,15 +29,16 @@
                 android:layout_marginVertical="4dp"
                 android:text="13/08/2020"
                 android:textSize="22sp"></TextView>
+
             <TextView
                 android:id="@+id/count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
-                android:textSize="14sp"
                 android:text="Students Present : 30"
-                ></TextView>
+                android:textSize="14sp"></TextView>
         </LinearLayout>
+
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="20dp"
@@ -53,4 +49,4 @@
             app:srcCompat="@drawable/right_arrow_icon"
             app:tint="@color/primary" />
     </LinearLayout>
-</com.google.android.material.card.MaterialCardView>
+</androidx.cardview.widget.CardView>
