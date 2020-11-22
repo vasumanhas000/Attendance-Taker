@@ -32,10 +32,10 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottom_sheet_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/rounded_shape"
-        android:id="@+id/bottom_sheet_layout"
         app:behavior_peekHeight="200dp"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
         tools:context=".MainActivity">
@@ -44,13 +44,27 @@
             android:id="@+id/text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:textSize="24dp"
             android:backgroundTint="@color/primary"
-            android:layout_marginTop="32dp"
-            android:text="Attendance will be displayed here"
+            android:text="Today's Attendance"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"></TextView>
+
+        <ListView
+            android:id="@+id/list_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:backgroundTint="@color/primary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_view">
+
+        </ListView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

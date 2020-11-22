@@ -10,6 +10,8 @@ import android.util.Log;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.gms.vision.CameraSource;
@@ -18,11 +20,15 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class AttendanceActivity extends AppCompatActivity {
 
     SurfaceView cameraView;
     TextView barcodeInfo;
+    ListView listView;
+    ArrayList<String> arrayList;
+    ArrayAdapter arrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +36,12 @@ public class AttendanceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_attendance);
         cameraView = findViewById(R.id.camera_view);
         barcodeInfo = findViewById(R.id.text_view);
+        listView = findViewById(R.id.list_view);
+        arrayList = new ArrayList<>();
+        arrayList.add("Hello");
+        arrayAdapter = new ArrayAdapter<>(this, R.layout.list_item,R.id.list_text_view,arrayList);
+        listView.setDivider(null);
+        listView.setAdapter(arrayAdapter);
         BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(this).setBarcodeFormats(Barcode.QR_CODE).build();
         CameraSource cameraSource = new CameraSource.Builder(this, barcodeDetector).setAutoFocusEnabled(true).setRequestedFps(30).build();
         cameraView.getHolder().addCallback(new SurfaceHolder.Callback() {
@@ -73,17 +85,23 @@ public class AttendanceActivity extends AppCompatActivity {
                 final SparseArray<Barcode> barcodes = detections.getDetectedItems();
 
                 if (barcodes.size() != 0) {
-                    barcodeInfo.post(new Runnable() {    // Use the post method of the TextView
-                        public void run() {
-                            Log.i("barcode",barcodes.valueAt(0).displayValue);
-                            barcodeInfo.setText(    // Update the TextView
-                                    barcodes.valueAt(0).displayValue
-                            );
-                        }
-                    });
-
-//                    barcodeInfo.setText(barcodes.valueAt(0).displayValue);
-                }
+//                    barcodeInfo.post(new Runnable() {    // Use the post method of the TextView
+//                        public void run() {
+//                            Log.i("barcode",barcodes.valueAt(0).displayValue);
+//                            barcodeInfo.setText(    // Update the TextView
+//                                    barcodes.valueAt(0).displayValue
+//                            );
+//                        }
+//                    });
+                    if(!arrayList.contains(barcodes.valueAt(0).displayValue)){
+                    arrayList.add(barcodes.valueAt(0).displayValue);
+                   listView.post(new Runnable() {
+                       @Override
+                       public void run() {
+                         arrayAdapter.notifyDataSetChanged();
+                       }
+                   });
+                }}
             }
         });
     }
