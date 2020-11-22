@@ -5,8 +5,12 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
@@ -61,7 +65,7 @@ public class AttendanceActivity extends AppCompatActivity {
         listView.setDivider(null);
         listView.setAdapter(arrayAdapter);
         BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(this).setBarcodeFormats(Barcode.QR_CODE).build();
-        CameraSource cameraSource = new CameraSource.Builder(this, barcodeDetector).setAutoFocusEnabled(true).setRequestedFps(30).build();
+        CameraSource cameraSource = new CameraSource.Builder(this, barcodeDetector).setAutoFocusEnabled(true).setRequestedPreviewSize(1280,720).setRequestedFps(30).build();
         cameraView.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
@@ -103,6 +107,7 @@ public class AttendanceActivity extends AppCompatActivity {
                 final SparseArray<Barcode> barcodes = detections.getDetectedItems();
 
                 if (barcodes.size() != 0) {
+
 //                    barcodeInfo.post(new Runnable() {    // Use the post method of the TextView
 //                        public void run() {
 //                            Log.i("barcode",barcodes.valueAt(0).displayValue);
@@ -112,6 +117,13 @@ public class AttendanceActivity extends AppCompatActivity {
 //                        }
 //                    });
                     if(!arrayList.contains(barcodes.valueAt(0).displayValue)){
+                        Vibrator vibrator =(Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+                        } else {
+                            //deprecated in API 26
+                            vibrator.vibrate(500);
+                        }
                     arrayList.add(barcodes.valueAt(0).displayValue);
                    listView.post(new Runnable() {
                        @Override
