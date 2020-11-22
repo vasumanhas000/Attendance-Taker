@@ -5,6 +5,8 @@
     app:cardBackgroundColor="@color/white"
     app:contentPaddingLeft="8dp"
     app:contentPaddingRight="8dp"
+    android:clickable="true"
+    android:focusable="true"
     app:cardCornerRadius="10dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:elevation="3dp"

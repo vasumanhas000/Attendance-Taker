@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/BarcodeAttendanceTaker">
-
+        <activity android:name=".AttendanceViewerActivity"></activity>
         <activity android:name=".AttendanceActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

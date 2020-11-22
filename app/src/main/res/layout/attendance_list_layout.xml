@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:paddingHorizontal="8dp"
+    android:paddingTop="4dp"
+    android:divider="@drawable/divider"
+    android:paddingBottom="4dp"
+    android:background="#f3f5f6"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/attendance_list_text_view"
+        android:layout_width="wrap_content"
+        android:textSize="20sp"
+        android:text="Hello"
+        android:layout_height="wrap_content"></TextView>
+
+</LinearLayout>

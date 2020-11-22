@@ -42,9 +42,9 @@ public class MainActivity extends AppCompatActivity implements AttendanceAdapter
         recyclerView = findViewById(R.id.my_recycler_view);
         attendanceModels = new ArrayList<>();
         ArrayList<String> temp = new ArrayList<>();
-        temp.add("1");
-        temp.add("2");
-        temp.add("3");
+        temp.add("19BIT0277");
+        temp.add("19BIT0077");
+        temp.add("19BIT0227");
         attendanceModels.add(new AttendanceModel(temp,"2020-08-25"));
         adapter = new AttendanceAdapter(attendanceModels,this);
         recyclerView.setAdapter(adapter);
@@ -57,9 +57,10 @@ public class MainActivity extends AppCompatActivity implements AttendanceAdapter
     @Override
     public void onAttendanceClick(int position) {
         Log.i("position",position+"");
-//        Intent intent = new Intent(getApplicationContext(),SecondActivity.class);
-//        intent.putExtra("position",position);
-//        startActivity(intent);
+        Intent intent = new Intent(getApplicationContext(),AttendanceViewerActivity.class);
+        intent.putExtra("position",position);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
     }
 
     private String[] getRequiredPermissions() {
