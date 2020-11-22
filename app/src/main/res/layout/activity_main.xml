@@ -12,6 +12,7 @@
         app:srcCompat="@drawable/add_icon"
         app:borderWidth="0dp"
         android:onClick="nextActivity"
+        app:tint="@color/white"
         android:backgroundTint="@color/primary"
         android:layout_gravity="bottom|right">
 

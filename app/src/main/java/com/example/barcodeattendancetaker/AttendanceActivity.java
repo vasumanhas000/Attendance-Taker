@@ -1,6 +1,7 @@
 package com.example.barcodeattendancetaker;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -18,9 +20,13 @@ import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class AttendanceActivity extends AppCompatActivity {
 
@@ -29,6 +35,18 @@ public class AttendanceActivity extends AppCompatActivity {
     ListView listView;
     ArrayList<String> arrayList;
     ArrayAdapter arrayAdapter;
+    BottomSheetBehavior bottomSheetBehavior;
+
+    public void onClickTick(View view){
+        if(bottomSheetBehavior.getState()==bottomSheetBehavior.STATE_COLLAPSED){
+            bottomSheetBehavior.setState(bottomSheetBehavior.STATE_EXPANDED);
+        }else{
+            String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+            MainActivity.attendanceModels.add(new AttendanceModel(arrayList,date));
+            MainActivity.adapter.notifyDataSetChanged();
+            finish();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,5 +122,7 @@ public class AttendanceActivity extends AppCompatActivity {
                 }}
             }
         });
+        ConstraintLayout bottomSheetLayout = findViewById(R.id.bottom_sheet_layout);
+         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetLayout);
     }
 }

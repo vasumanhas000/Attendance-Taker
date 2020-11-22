@@ -20,9 +20,9 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements AttendanceAdapter.OnAttendanceListener{
 
-    ArrayList<AttendanceModel> attendanceModels;
+   static ArrayList<AttendanceModel> attendanceModels;
     RecyclerView recyclerView;
-    AttendanceAdapter adapter;
+   static AttendanceAdapter adapter;
 
     public void nextActivity(View view){
         Intent intent = new Intent(getApplicationContext(),AttendanceActivity.class);
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements AttendanceAdapter
         temp.add("1");
         temp.add("2");
         temp.add("3");
-        attendanceModels.add(new AttendanceModel(temp,"25th Aug,2000"));
+        attendanceModels.add(new AttendanceModel(temp,"2020-08-25"));
         adapter = new AttendanceAdapter(attendanceModels,this);
         recyclerView.setAdapter(adapter);
         DividerItemDecoration itemDecoration = new DividerItemDecoration(getApplicationContext(),DividerItemDecoration.VERTICAL);
