@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
@@ -52,6 +53,7 @@ public class AttendanceActivity extends AppCompatActivity {
         if(bottomSheetBehavior.getState()==bottomSheetBehavior.STATE_COLLAPSED){
             bottomSheetBehavior.setState(bottomSheetBehavior.STATE_EXPANDED);
         }else{
+            if(arrayList.size()>0){
             String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
             MainActivity.attendanceModels.add(new AttendanceModel(arrayList,date));
             MainActivity.adapter.notifyDataSetChanged();
@@ -66,6 +68,9 @@ public class AttendanceActivity extends AppCompatActivity {
             MainActivity.recyclerView.setVisibility(View.VISIBLE);
             MainActivity.constraintLayout.setVisibility(View.GONE);
             finish();
+        }else{
+                Toast.makeText(this,"Attendance list cannot be empty",Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
