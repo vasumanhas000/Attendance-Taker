@@ -1,6 +1,7 @@
 package com.example.barcodeattendancetaker;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -9,20 +10,27 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements AttendanceAdapter.OnAttendanceListener{
 
-   static ArrayList<AttendanceModel> attendanceModels;
-    RecyclerView recyclerView;
-   static AttendanceAdapter adapter;
+    static ArrayList<AttendanceModel> attendanceModels;
+    static RecyclerView recyclerView;
+    static ConstraintLayout constraintLayout;
+    static SharedPreferences sharedPreferences;
+    static AttendanceAdapter adapter;
+    Gson gson;
 
     public void nextActivity(View view){
         Intent intent = new Intent(getApplicationContext(),AttendanceActivity.class);
@@ -40,12 +48,28 @@ public class MainActivity extends AppCompatActivity implements AttendanceAdapter
             getRuntimePermissions();
         }
         recyclerView = findViewById(R.id.my_recycler_view);
-        attendanceModels = new ArrayList<>();
-        ArrayList<String> temp = new ArrayList<>();
-        temp.add("19BIT0277");
-        temp.add("19BIT0077");
-        temp.add("19BIT0227");
-        attendanceModels.add(new AttendanceModel(temp,"2020-08-25"));
+        constraintLayout = findViewById(R.id.constraintLayout);
+        sharedPreferences = this.getSharedPreferences("com.example.barcodeattendancetaker",MODE_PRIVATE);
+        try {
+            gson = new Gson();
+            String response = sharedPreferences.getString("attendance","");
+            if(response==""){
+                attendanceModels = new ArrayList<>();
+            }else{
+                attendanceModels =(ArrayList<AttendanceModel>) gson.fromJson(response,new TypeToken<ArrayList<AttendanceModel>>(){}.getType());
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        if(attendanceModels.size()==0){
+            recyclerView.setVisibility(View.GONE);
+            constraintLayout.setVisibility(View.VISIBLE);
+        }
+        else{
+            recyclerView.setVisibility(View.VISIBLE);
+            constraintLayout.setVisibility(View.GONE);
+        }
         adapter = new AttendanceAdapter(attendanceModels,this);
         recyclerView.setAdapter(adapter);
 //        DividerItemDecoration itemDecoration = new DividerItemDecoration(getApplicationContext(),DividerItemDecoration.VERTICAL);

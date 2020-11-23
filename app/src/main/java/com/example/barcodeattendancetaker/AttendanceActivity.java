@@ -25,6 +25,7 @@ import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -54,6 +55,16 @@ public class AttendanceActivity extends AppCompatActivity {
             String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
             MainActivity.attendanceModels.add(new AttendanceModel(arrayList,date));
             MainActivity.adapter.notifyDataSetChanged();
+            try {
+                Gson gson = new Gson();
+                String response = gson.toJson(MainActivity.attendanceModels);
+                MainActivity.sharedPreferences.edit().putString("attendance",response).apply();
+                Log.i("add attendance", "attendance: added");
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            MainActivity.recyclerView.setVisibility(View.VISIBLE);
+            MainActivity.constraintLayout.setVisibility(View.GONE);
             finish();
         }
     }
@@ -66,11 +77,10 @@ public class AttendanceActivity extends AppCompatActivity {
         barcodeInfo = findViewById(R.id.text_view);
         listView = findViewById(R.id.list_view);
         arrayList = new ArrayList<>();
-        arrayList.add("Hello");
         arrayAdapter = new ArrayAdapter<>(this, R.layout.list_item,R.id.list_text_view,arrayList);
         listView.setDivider(null);
         listView.setAdapter(arrayAdapter);
-        BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(this).setBarcodeFormats(Barcode.QR_CODE).build();
+        BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(this).setBarcodeFormats(Barcode.CODE_128).build();
         CameraSource cameraSource = new CameraSource.Builder(this, barcodeDetector).setAutoFocusEnabled(true).setRequestedPreviewSize(1280,720).setRequestedFps(30).build();
         cameraView.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
